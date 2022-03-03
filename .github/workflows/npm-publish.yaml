@@ -19,4 +19,4 @@ jobs:
       - name: publish
         env:
           TOKEN: ${{ secrets.TOKEN }}
-        run: npm publish --regsitry=https://npm.pkg.github.com/darafi/react-activity-feed/ --userconfig=./.npmrc
+        run: npm publish 
