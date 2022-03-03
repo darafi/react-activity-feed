@@ -19,5 +19,5 @@ jobs:
       - name: test
         run: npm test
       - uses: JS-DevTools/npm-publish@v1
-          with:
-            token: ${{ secrets.TOKEN }}
+        with:
+          token: ${{ secrets.TOKEN }}
