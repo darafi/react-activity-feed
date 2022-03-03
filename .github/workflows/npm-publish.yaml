@@ -16,7 +16,9 @@ jobs:
         run: npm install
       - name: test
         run: npm test
+      - name: adduser
+        run: npm adduser
       - name: publish
         env:
           TOKEN: ${{ secrets.TOKEN }}
-        run: npm publish 
+        run: npm publish
