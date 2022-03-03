@@ -17,7 +17,12 @@ jobs:
       - name: test
         run: npm test
       - name: adduser
-        run: npm login  --registry=https://npm.pkg.github.com/darafi/react-activity-feed/
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+        run: |
+             cat << EOF > .npmrc
+             //npm.pkg.github.com/darafi/react-activity-feed/:_authToken=$TOKEN
+             EOF
       - name: publish
         env:
           TOKEN: ${{ secrets.TOKEN }}
