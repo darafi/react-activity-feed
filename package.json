@@ -15,7 +15,7 @@
     "*.css"
   ],
   "publishConfig": {
-    "registry":"https://npm.pkg.github.com/darafi/"
+    "registry":"https://npm.pkg.github.com/darafi/dara-platform"
   },
   "files": [
     "src",
