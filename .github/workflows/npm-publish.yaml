@@ -21,7 +21,7 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
         run: |
              cat << EOF > .npmrc
-             //npm.pkg.github.com/darafi/react-activity-feed/:_authToken=$TOKEN
+             //npm.pkg.github.com/darafi/:_authToken=$TOKEN
              EOF
       - name: publish
         env:
