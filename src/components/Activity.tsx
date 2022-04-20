@@ -58,7 +58,9 @@ export type ActivityProps<
   /** The user_id part of the feed that the activity should be reposted to when
    * pressing the RepostButton */
   userId?: string;
-  // Patched by Earnity
+
+  // Patches
+  // eslint-disable-next-line
   customTextRenderer?: (...args: any[]) => React.ReactNode;
 }>;
 
