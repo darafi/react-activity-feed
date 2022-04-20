@@ -17,6 +17,11 @@ import {
   FeedProps,
 } from '../context';
 
+type FeedHeaderProps = {
+  text: string;
+  children?: React.ReactNode;
+};
+
 type FlatFeedInnerProps<
   UT extends DefaultUT = DefaultUT,
   AT extends DefaultAT = DefaultAT,
@@ -47,6 +52,13 @@ type FlatFeedInnerProps<
   Placeholder: ElementOrComponentOrLiteralType<FeedPlaceholderProps>;
   /** Read options for the API client (eg. limit, ranking, ...) */
   options?: FeedProps['options'];
+
+  //Patches
+  /* eslint-disable */
+  Header?: ElementOrComponentOrLiteralType<FeedHeaderProps>;
+  // When set to falsy renders header only when activities amount > 0
+  shouldAlwaysRenderHeader?: boolean;
+  /* eslint-enable */
 };
 
 export type FlatFeedProps<
@@ -90,6 +102,8 @@ const FlatFeedInner = <
   Paginator,
   LoadingIndicator,
   options,
+  Header,
+  shouldAlwaysRenderHeader,
 }: FlatFeedInnerProps<UT, AT, CT, RT, CRT>) => {
   const feed = useFeedContext<UT, AT, CT, RT, CRT, PT>();
   const { t } = useTranslationContext();
@@ -108,10 +122,19 @@ const FlatFeedInner = <
         onClick: feed.hasReverseNextPage ? feed.loadReverseNextPage : refreshFeed,
         labelFunction: feed.hasReverseNextPage ? () => t('Load activities') : undefined,
       })}
-
-      {feed.activities.size === 0 && feed.hasDoneRequest
-        ? smartRender<FeedPlaceholderProps>(Placeholder)
-        : smartRender<LoadMorePaginatorProps>(Paginator, {
+      {shouldAlwaysRenderHeader &&
+        smartRender<FeedHeaderProps>(Header, {
+          text: 'Posts',
+        })}
+      {feed.activities.size === 0 && feed.hasDoneRequest ? (
+        smartRender<FeedPlaceholderProps>(Placeholder)
+      ) : (
+        <>
+          {!shouldAlwaysRenderHeader &&
+            smartRender<FeedHeaderProps>(Header, {
+              text: 'Posts',
+            })}
+          {smartRender<LoadMorePaginatorProps>(Paginator, {
             loadNextPage: feed.loadNextPage,
             hasNextPage: feed.hasNextPage,
             refreshing: feed.refreshing,
@@ -125,6 +148,8 @@ const FlatFeedInner = <
               }),
             ),
           })}
+        </>
+      )}
     </>
   );
 };
