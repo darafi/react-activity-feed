@@ -22,6 +22,9 @@ export type CommentItemProps<
   {
     comment: EnrichedReaction<RT, CRT, UT>;
     onClickUser?: OnClickUserHandler<UT>;
+    // Patches
+    // eslint-disable-next-line
+    customTextRenderer?: (...args: any[]) => React.ReactNode;
   } & Partial<Record<'onClickMention' | 'onClickHashtag', (word: string) => void>>
 >;
 
@@ -32,6 +35,7 @@ export const CommentItem = <UT extends DefaultUT = DefaultUT, RT extends UR = UR
   onClickUser,
   className,
   style,
+  customTextRenderer,
 }: CommentItemProps<UT, RT, CRT>) => {
   const { tDateTimeParser } = useTranslationContext();
 
@@ -53,7 +57,8 @@ export const CommentItem = <UT extends DefaultUT = DefaultUT, RT extends UR = UR
             <span onClick={handleUserClick?.(user)} className="raf-comment-item__author">
               {user?.data.name}
             </span>{' '}
-            {textRenderer(data.text as string, 'raf-comment-item', onClickMention, onClickHashtag)}
+            {customTextRenderer?.(data.text) ??
+              textRenderer(data.text as string, 'raf-comment-item', onClickMention, onClickHashtag)}
           </p>
         </div>
       </Flex>
