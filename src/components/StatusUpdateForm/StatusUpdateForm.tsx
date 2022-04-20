@@ -66,6 +66,11 @@ export type StatusUpdateFormProps<AT extends DefaultAT = DefaultAT> = PropsWithE
   trigger?: TextareaProps['trigger'];
   /** The user_id part of the feed that the activity should be posted to  */
   userId?: string;
+
+  // Patches
+  /** workaround prop for setting initial value of textarea as it value is controlled by useStatusUpdateForm */
+  // eslint-disable-next-line typescript-sort-keys/interface
+  initialTextareaValue?: string;
 }>;
 
 export function StatusUpdateForm<
@@ -90,6 +95,7 @@ export function StatusUpdateForm<
   onSuccess,
   style,
   className,
+  initialTextareaValue,
 }: StatusUpdateFormProps<AT>) {
   const { t } = useTranslationContext();
   const state = useStatusUpdateForm<UT, AT, CT, RT, CRT, PT>({
@@ -99,6 +105,7 @@ export function StatusUpdateForm<
     doRequest,
     userId,
     onSuccess,
+    initialTextareaValue,
   });
 
   return (
