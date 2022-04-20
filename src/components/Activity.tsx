@@ -58,6 +58,8 @@ export type ActivityProps<
   /** The user_id part of the feed that the activity should be reposted to when
    * pressing the RepostButton */
   userId?: string;
+  // Patched by Earnity
+  customTextRenderer?: (...args: any[]) => React.ReactNode;
 }>;
 
 const DefaultRepost = <
@@ -104,6 +106,7 @@ export const Activity = <
   feedGroup,
   className,
   style,
+  customTextRenderer,
 }: ActivityProps<UT, AT, CT, RT, CRT>) => (
   <div className={classNames('raf-activity', className)} style={style}>
     {smartRender<ActivityHeaderProps<UT, AT>>(Header, { HeaderRight, icon, activity, onClickUser })}
@@ -121,6 +124,7 @@ export const Activity = <
       onClickUser,
       Repost,
       userId,
+      customTextRenderer,
     })}
     {smartRender<ActivityFooterProps<UT, AT, CT, RT, CRT>>(Footer, { activity, feedGroup, userId })}
   </div>
