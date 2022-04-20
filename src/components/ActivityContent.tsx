@@ -31,6 +31,7 @@ export const ActivityContent = <
   Card = DefaultCard,
   className,
   style,
+  customTextRenderer,
   ...props
 }: ActivityContentProps<UT, AT, CT, RT, CRT>) => {
   const {
@@ -45,7 +46,10 @@ export const ActivityContent = <
     <div className={classNames('raf-activity__content', className)} style={style}>
       {text && (
         <div style={{ padding: '8px 16px' }}>
-          <p>{textRenderer(text, 'raf-activity', props.onClickMention, props.onClickHashtag)}</p>
+          <p>
+            {customTextRenderer?.(text) ??
+              textRenderer(text, 'raf-activity', props.onClickMention, props.onClickHashtag)}
+          </p>
         </div>
       )}
 
