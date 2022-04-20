@@ -56,8 +56,9 @@ const defaultOgState = { activeUrl: '', data: {}, order: [] };
 const defaultImageState = { data: {}, order: [] };
 const defaultFileState = { data: {}, order: [] };
 
-const useTextArea = () => {
-  const [text, setText] = useState('');
+// Patch - initial value for text area state
+const useTextArea = (initialValue?: string) => {
+  const [text, setText] = useState(initialValue ?? '');
   const [curser, setCurser] = useState<number | null>(null);
   const textInputRef = useRef<HTMLTextAreaElement>();
 
@@ -376,7 +377,9 @@ export function useStatusUpdateForm<
   doRequest,
   userId,
   onSuccess,
-}: { activityVerb: string; feedGroup: string } & Pick<
+  // Patch
+  initialTextareaValue,
+}: { activityVerb: string; feedGroup: string; initialTextareaValue?: string } & Pick<
   StatusUpdateFormProps<AT>,
   'doRequest' | 'modifyActivityData' | 'onSuccess' | 'userId'
 >) {
@@ -390,7 +393,7 @@ export function useStatusUpdateForm<
     [],
   );
 
-  const { text, setText, insertText, onSelectEmoji, textInputRef } = useTextArea();
+  const { text, setText, insertText, onSelectEmoji, textInputRef } = useTextArea(initialTextareaValue);
 
   const {
     resetOg,
